@@ -1,0 +1,18 @@
+services:
+  dotfiles-test:
+    build:
+      context: ..
+      dockerfile: test/Dockerfile
+    container_name: dotfiles-test
+    hostname: dotfiles-test
+    ports:
+      - "2222:22"
+    volumes:
+      # Mount dotfiles for live editing (optional - comment out to test fresh install)
+      # - ..:/home/testuser/dotfiles
+      - dotfiles-home:/home/testuser
+    stdin_open: true
+    tty: true
+
+volumes:
+  dotfiles-home:

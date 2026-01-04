@@ -1,0 +1,46 @@
+# Ensure colors work
+export TERM="${TERM:-xterm-256color}"
+
+# Custom minimal prompt (P10k style)
+autoload -Uz vcs_info
+zstyle ':vcs_info:git:*' formats '%b'
+setopt PROMPT_SUBST
+
+precmd() {
+    vcs_info
+    # Set prompt with current git info
+    if [[ -n "$vcs_info_msg_0_" ]]; then
+        PROMPT='%F{cyan}%~%f %F{green}'"${vcs_info_msg_0_}"'%f %(?.%F{green}.%F{red})❯%f '
+    else
+        PROMPT='%F{cyan}%~%f %(?.%F{green}.%F{red})❯%f '
+    fi
+}
+
+# History
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+
+# Load aliases (if exists)
+[[ -f ~/.config/dotfiles/shell/aliases.zsh ]] && source ~/.config/dotfiles/shell/aliases.zsh
+
+# NVM (Node Version Manager)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Editor
+export EDITOR="nvim"
+export VISUAL="code"
+
+# Path additions
+export PATH="$HOME/.local/bin:$PATH"
+
+# Go path (Linux)
+if [[ -d "/usr/local/go/bin" ]]; then
+    export PATH="$PATH:/usr/local/go/bin"
+fi
+
+# Kiro shell integration (when in Kiro terminal)
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"

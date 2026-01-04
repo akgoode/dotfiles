@@ -1,0 +1,26 @@
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Editor directories
+.idea/
+*.swp
+*.swo
+*~
+
+# Local overrides (if you want machine-specific configs)
+*.local
+
+# Neovim
+editors/nvim/plugin/
