@@ -38,6 +38,9 @@ COPY --chown=testuser:testuser . /home/testuser/dotfiles
 # Create the expected .dotfiles location as symlink
 RUN ln -s /home/testuser/dotfiles /home/testuser/.dotfiles
 
+# Force cache invalidation - updated 2025-01-04 22:25:00
+RUN echo "Build timestamp: $(date)" > /home/testuser/.build_timestamp
+
 # Expose SSH port
 EXPOSE 22
 

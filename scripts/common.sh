@@ -67,9 +67,29 @@ fi
 # Set zsh as default shell
 if [ "$SHELL" != "$(which zsh)" ]; then
     echo "Setting zsh as default shell..."
+    
+    # Try chsh first (works in most normal environments)
     if chsh -s "$(which zsh)" 2>/dev/null; then
         echo "Default shell changed to zsh"
     else
-        echo "Could not change shell automatically. Run manually: chsh -s \$(which zsh)"
+        # In Docker or restricted environments, update /etc/passwd directly
+        echo "chsh failed, trying alternative method..."
+        ZSH_PATH=$(which zsh)
+        CURRENT_USER=$(whoami)
+        
+        # Check if we can modify /etc/passwd
+        if sudo test -w /etc/passwd 2>/dev/null || [ -w /etc/passwd ]; then
+            # Update the user's shell in /etc/passwd
+            if sudo sed -i "s|^\($CURRENT_USER:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:\).*|\1$ZSH_PATH|" /etc/passwd 2>/dev/null; then
+                echo "Successfully updated default shell to zsh in /etc/passwd"
+                export SHELL="$ZSH_PATH"
+            else
+                echo "Could not update /etc/passwd. Run manually: sudo chsh -s $ZSH_PATH $CURRENT_USER"
+            fi
+        else
+            echo "No permission to modify /etc/passwd. Run manually: chsh -s $ZSH_PATH"
+        fi
     fi
 fi
+
+# Updated: 2025-01-04 22:25:00
