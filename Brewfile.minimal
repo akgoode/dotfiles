@@ -1,0 +1,26 @@
+# Minimal Brewfile for core dotfiles functionality
+# Essential CLI tools only
+
+# CLI Tools
+brew "git"
+brew "neovim" 
+brew "tmux"
+brew "zsh"
+brew "curl"
+brew "jq"
+brew "ripgrep"
+brew "fd"
+brew "tree"
+
+# Development essentials
+brew "nvm"
+
+# Optional but commonly used
+# brew "go"
+# brew "terraform" 
+# brew "awscli"
+# brew "kubernetes-cli"
+
+# Essential GUI apps (uncomment if needed)
+# cask "visual-studio-code"
+# cask "iterm2"
