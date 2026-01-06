@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(brew list:*)",
+      "Bash(node:*)",
+      "Bash(npm --version:*)",
+      "Bash(yarn --version:*)",
+      "Bash(pnpm:*)",
+      "Bash(go version:*)",
+      "Bash(dotnet --version:*)",
+      "Bash(java:*)",
+      "Bash(docker:*)",
+      "Bash(kubectl version:*)",
+      "Bash(terraform:*)",
+      "Bash(code:*)",
+      "Bash(cat:*)",
+      "Bash(tree:*)",
+      "WebSearch"
+    ]
+  }
+}
